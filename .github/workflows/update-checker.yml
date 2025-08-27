@@ -1,13 +1,13 @@
 name: Update Checker
 
-env:
+#env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
 
-on:
-  #schedule:
-    #- cron: '0 16 * * 6' 
-  #workflow_dispatch: 
+#on:
+  schedule:
+    - cron: '0 16 * * 6' 
+  workflow_dispatch: 
 
 #jobs:
   trigger_build:
@@ -19,6 +19,7 @@ on:
       with:
         token: ${{ secrets.MY_PAT }}
         event-type: Source Code Update
+
 
 
 
