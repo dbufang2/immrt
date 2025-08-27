@@ -5,9 +5,9 @@ env:
   REPO_BRANCH: master
 
 on:
-  schedule:
-    - cron: '0 16 * * 1' 
-  workflow_dispatch: 
+  #schedule:
+    #- cron: '0 16 * * 6' 
+  #workflow_dispatch: 
 
 jobs:
   trigger_build:
@@ -19,4 +19,5 @@ jobs:
       with:
         token: ${{ secrets.MY_PAT }}
         event-type: Source Code Update
+
 
