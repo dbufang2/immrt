@@ -1,6 +1,7 @@
 
 name: teswrt
-
+permissions:
+  contents: write
 on:
   repository_dispatch:
 #  schedule:
@@ -184,10 +185,10 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         name: iwrt ${{ env.DATE }}
-        tag: ${{ env.TAG_DATE }}
+        tag: ${{ env.TAG_DATE }}-${{ github.run_number }}
         artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*.img.gz
-        allowUpdates: true
-        removeArtifacts: true
+        allowUpdates: false
+        removeArtifacts: false
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           * Default IP: 192.168.1.1
@@ -353,10 +354,10 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         name: iwrtx86 ${{ env.PRODUCT_NAME }}${{ env.DATE }}
-        tag: ${{ env.TAG_DATE }}
+        tag: x86-${{ env.TAG_DATE }}-${{ github.run_number }}
         artifacts: ${{ env.FIRMWARE }}/*.img.gz
-        allowUpdates: true
-        removeArtifacts: true
+        allowUpdates: false
+        removeArtifacts: false
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           * Default IP: 192.168.1.1
@@ -371,18 +372,9 @@ jobs:
     steps:
 
       - name: Delete workflow runs
-        uses: Mattraks/delete-workflow-runs@main
+        uses: Mattraks/delete-workflow-runs@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           retain_days: 20
           keep_minimum_runs: 1
-          
-      - name: Remove old Releases
-        uses: dev-drprasad/delete-older-releases@master
-        with:
-          repo: ${{ github.repository }}
-          keep_latest: 300
-          delete_tags: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
